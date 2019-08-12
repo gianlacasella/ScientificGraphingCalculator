@@ -1,21 +1,23 @@
-#                  Modules 
+# Usefull modules and tools 
 from tkinter import Tk, Spinbox, PhotoImage, Entry, Frame, LEFT, RIGHT, BOTTOM, BOTH, TOP, Label, StringVar, font, Button, Text, DISABLED, NORMAL, INSERT, END, Scrollbar, Y
 import scipy.misc
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 import matplotlib.pyplot as plt
+from numpy import array, arange
 
-#               Main  Window
 
 # Creating the  main window, and setting props
 mainWindow = Tk()
-mainWindow.title("Scientific Calculator v1.0")
+mainWindow.title("Scientific Plotting Calculator v1.0")
 mainWindow.resizable(False, False)
 img = PhotoImage(file = "calc.png")
 mainWindow.call('wm', 'iconphoto', mainWindow._w, img)
 
 
-#               Global variables
+
+
+# GLOBAL VARIABLES SECTION ======================================================================
 
 # Fonts
 mainWindowFont = font.Font(family = "Verdana", size = 10)
@@ -31,7 +33,7 @@ operationFilling = False
 parenthesisOpen = False
 actualHistoryOperation = StringVar()
 operationMade = False
-a_list = ['red', 'blue', 'green', 'black', 'grey', 'yellow']
+a_list = ['red', 'blue', 'green', 'black', 'grey', 'yellow', 'cyan', 'magenta']
 colorSelected = StringVar()
 xminsize = StringVar()
 yminsize = StringVar()
@@ -49,7 +51,9 @@ firstScreenText = StringVar()
 secondScreenText = StringVar()
 
 
-#                     Frames 
+
+
+# FRAMES SECTION ==============================================================================
 
 # Calculator Frame
 calculatorFrame = Frame(mainWindow)
@@ -114,7 +118,6 @@ firstRowButtons.config(width = "500", height = "200", bg = "grey")
 firstRowButtons.grid(row = 0,  column = 0, columnspan = 9)
 firstRowButtons.pack(fill = "x",expand = "True")
 
-
 # Second row of buttons Frame
 secondRowButtons = Frame(buttonsFrame)
 secondRowButtons.pack_propagate(0)
@@ -151,8 +154,11 @@ sixthRowButtons.grid(row = 5,  column = 0, columnspan = 9)
 sixthRowButtons.pack(fill = "x",expand = "True")
 
 
-#                   Text and scrollbar
 
+
+# TEXT (HISTORY), SCROLLBAR, AND PLOTTING SECTION  ================================================================= 
+
+# Text and scrollbar 
 history = Text(historyFrame, width = "300" , height = "100", fg = "white", bg = "black", font = historyTextFont)
 history.config(state = DISABLED)
 history.grid(row = 1, column = 0)
@@ -163,8 +169,7 @@ history.config(yscrollcommand=textScrollbar.set)
 textScrollbar.config(command=history.yview)
 history.pack()
 
-#                   Plotting an empty graph with matplotlib, into the tkinter window
-
+# Plotting an empty graph with matplotlib, into the tkinter window
 firstPlot = False
 myFigure = Figure(figsize=(5,5), dpi = 100)
 a = myFigure.add_subplot(111)
@@ -176,19 +181,9 @@ toolbar = NavigationToolbar2Tk(canvas, plottingFrame)
 canvas._tkcanvas.pack(side = TOP, fill = BOTH, expand = True)
 
 
-#                    Screens
-# We use 2 screens, firstScreen and secondScreen, both  as labels
 
+# FIRST EXECUTION SETTINGS SECTION ==============================================================================
 
-firstScreen = Label(screensFrame, textvariable = firstScreenText, font = mainWindowFont, anchor = "e")
-firstScreen.grid(row = 1, column = 0, padx = 0, pady = 2)
-firstScreen.config(background = "black", fg = "white", justify = "right",height = "5", width = "62")
-
-secondScreen = Label(screensFrame, textvariable = secondScreenText, font = secondaryWindowFont, anchor = "e")
-secondScreen.grid(row = 0, column = 0, padx = 0, pady = 2)
-secondScreen.config(background = "#20221f", fg = "white", justify = "right",height = "5", width = "62")
-
-# First execution settings
 firstScreenText.set("0")
 secondScreenText.set("0")
 DEGButtonText.set("DEG")
@@ -200,8 +195,26 @@ COSButtonText.set("cos()")
 TANButtonText.set("tan()")
 
 
-#                          Usefull functions
 
+
+# SCREENS SECTION ===============================================================================================
+
+# First screen
+firstScreen = Label(screensFrame, textvariable = firstScreenText, font = mainWindowFont, anchor = "e")
+firstScreen.grid(row = 1, column = 0, padx = 0, pady = 2)
+firstScreen.config(background = "black", fg = "white", justify = "right",height = "5", width = "62")
+
+# Second screen
+secondScreen = Label(screensFrame, textvariable = secondScreenText, font = secondaryWindowFont, anchor = "e")
+secondScreen.grid(row = 0, column = 0, padx = 0, pady = 2)
+secondScreen.config(background = "#20221f", fg = "white", justify = "right",height = "5", width = "62")
+
+
+
+
+# USEFULL FUNCTIONS SECTION ====================================================================================
+
+# Function to add elements to the firstScreenText
 def firstScreenTextSet(num):
     # We need global variables
     global operationFilling
@@ -232,6 +245,7 @@ def firstScreenTextSet(num):
     return
 
 
+
 # Function to use on C button
 def C():
     firstScreenText.set("0")
@@ -240,6 +254,7 @@ def C():
 
 
 
+# Function to use de Delete button
 def Delete():
     actualNumber = firstScreenText.get()
     actualNumber = actualNumber[:-1]
@@ -273,7 +288,7 @@ def clickOnOperation(operation):
 
 
 
-# Button to change the DEG button text to RAD
+# Function to change the DEG button text to RAD (user clicks on DEG button)
 def changeDEGtext():
     if DEGButtonText.get() == "DEG":
         DEGButtonText.set("RAD")
@@ -283,7 +298,7 @@ def changeDEGtext():
 
 
 
-# Function to change the trigonometric functions button text 
+# Function to change the trigonometric functions buttons text (user clicks on RAD button) 
 def changeTrigonometricFunctionsText():
     if ASINButtonText.get() == "asin()":
         ASINButtonText.set("asinh()")
@@ -303,22 +318,19 @@ def changeTrigonometricFunctionsText():
 
 
 
-# Function to use on the CE button
+# Function to make CE (the users clicks on CE button)
 def CE():
     firstScreenText.set("0")
     return
 
 
 
-
+# Function to use to calculate the result of the operations and add them to the history
 def calculate():
     global operationMade
     global actualHistoryOperation
     if secondScreenText.get() == "0":
         secondScreenText.set("")
-
-
-
     # We get the complete operation
     completeText = secondScreenText.get() + firstScreenText.get()
     completeTextWithDot = completeText.replace(",", ".")
@@ -334,6 +346,7 @@ def calculate():
 
 
 
+# Function to add an operation to the history
 def addHistory():
     global actualHistoryOperation
     history.config(state = NORMAL)
@@ -343,6 +356,7 @@ def addHistory():
 
 
 
+# Function to use when the user clicks on CLEAR HISTORY button
 def clearHistory():
     global actualHistoryOperation
     actualHistoryOperation.set("")
@@ -353,6 +367,7 @@ def clearHistory():
 
 
 
+# Function to use when the user wants to calculate trigonometric functions
 def calculateTrigonometric(function):
     global operationMade
     global actualHistoryOperation
@@ -382,6 +397,7 @@ def calculateTrigonometric(function):
 
 
 
+# Function to use when the user clicks on sin() button
 def _sin():
     if SINButtonText.get() == "sin()":
         calculateTrigonometric("sin")
@@ -392,6 +408,7 @@ def _sin():
 
 
 
+# Function to use when the user clicks on cos() button
 def _cos():
     if COSButtonText.get() == "cos()":
         calculateTrigonometric("cos")
@@ -402,6 +419,7 @@ def _cos():
 
 
 
+# Function to use when the user clicks on tan() button
 def _tan():
     if TANButtonText.get() == "tan()":
         calculateTrigonometric("tan")
@@ -412,6 +430,7 @@ def _tan():
 
 
 
+# Function to use when the user clicks on asin() button
 def asin():
     if ASINButtonText.get() == "asin()":
         calculateTrigonometric("arcsin")
@@ -422,6 +441,7 @@ def asin():
 
 
 
+# Function to use when the user clicks on acos() button
 def acos():
     if ACOSButtonText.get() == "acos()":
         calculateTrigonometric("arccos")
@@ -432,6 +452,7 @@ def acos():
 
 
 
+# Function to use when the user clicks on atan() button
 def atan():
     if ATANButtonText.get() == "atan()":
         calculateTrigonometric("arctan")
@@ -442,6 +463,7 @@ def atan():
 
 
 
+# Function to use when the user wants to calculate a logarithm or an exponential 
 def calculateLogarithmExponential(function):
     global operationMade
     global actualHistoryOperation
@@ -465,12 +487,14 @@ def calculateLogarithmExponential(function):
 
 
 
+# Function to use when the user clicks on PI button
 def insertPI():
     firstScreenText.set("3,141592")
     return
 
 
 
+# Function to use when the user clicks on DMS button
 def usingDMS():
     firstScreen = firstScreenText.get()
     secondScreen = secondScreenText.get()
@@ -490,6 +514,7 @@ def usingDMS():
     
 
 
+# Function to use when the user clicks on DEG button
 def usingDEG():
     firstScreen = firstScreenText.get()
     secondScreen = secondScreenText.get()
@@ -507,6 +532,7 @@ def usingDEG():
 
 
 
+# Function to use when the user clicks on Factorial button
 def usingFactorial():
     firstScreen = firstScreenText.get()
     secondScreen = secondScreenText.get()
@@ -524,6 +550,7 @@ def usingFactorial():
 
 
 
+# Function to use when the user clicks on 1/x button
 def using1X():
     firstScreen = firstScreenText.get()
     firstScreenText.set(firstScreen + "1/")
@@ -531,6 +558,7 @@ def using1X():
 
 
 
+# Function to use when the user clicks on +- button
 def usingPlusMinus():
     firstScreen = firstScreenText.get()
     if firstScreen[0] == "-":
@@ -541,6 +569,7 @@ def usingPlusMinus():
 
 
 
+# Function to use when the user clicks on PLOT button
 def plotFunction():
     global a
     global canvas
@@ -565,13 +594,15 @@ def plotFunction():
 
 
 
-#                     Buttons 
+
+# BUTTONS SECTION ========================================================================================================================================================================================================================== 
+
 # Clean history button
 buttonClearHistory = Button(historyFrame, font = buttonsFont, text = "Clear History", bg = "#20221f", height = 1, width = 35, fg = "white", command = lambda:clearHistory(),activebackground = "#383737", activeforeground = "white")
 buttonClearHistory.grid(row = 0, column = 0, sticky = "EWNS")
 
 
-# FIRST ROW
+# First row of buttons inside the calculatorFrame
 firstRowButtons.columnconfigure((0,1,2), weight=1)
 
 buttonDEG = Button(firstRowButtons, font = buttonsFont, textvariable = DEGButtonText, width = 10, height = 3, bg = "#20221f", fg = "white", relief = "raised",  activebackground = "#383737", activeforeground = "white", command = lambda:changeDEGtext())
@@ -585,8 +616,7 @@ buttonFE.grid(row = 0, column = 2, padx = 0, pady = 0, columnspan = 1, sticky = 
 
 
 
-# SECOND ROW
-
+# Second row of buttons inside the calculatorFrame
 secondRowButtons.columnconfigure((8,1,2,3,4,5,6,7), weight=1)
 
 buttonX2 = Button(secondRowButtons, font = buttonsFont, text = "X^2", width = 2, height = 4, bg = "#20221f", fg = "white", relief = "raised",  activebackground = "#383737", activeforeground = "white", command = lambda:clickOnOperation("**2"))
@@ -618,7 +648,7 @@ buttonDiv.grid(row = 0, column = 8, padx = 0, pady = 0, columnspan = 1, sticky =
 
 
 
-# THIRD ROW
+# Third row of buttons inside the calculatorFrame
 thirdRowButtons.columnconfigure((8,1,2,3,4,5,6,7), weight=1)  # when window is resized
 
 buttonX3 = Button(thirdRowButtons, font = buttonsFont, text = "X^3", width = 2, height = 4, bg = "#20221f", fg = "white", relief = "raised",  activebackground = "#383737", activeforeground = "white", command = lambda:clickOnOperation("**3"))
@@ -651,7 +681,7 @@ buttonMult.grid(row = 0, column = 8, padx = 0, pady = 0, columnspan = 1, sticky 
 
 
 
-# FOURTH ROW
+# Fourth row of buttons inside the calculatorFrame
 fourthRowButtons.columnconfigure((8,1,2,3,4,5,6,7), weight=1)  # when window is resized
 
 buttonSQRT = Button(fourthRowButtons, font = buttonsFont, text = "sqrt()", width = 2, height = 4, bg = "#20221f", fg = "white", relief = "raised",  activebackground = "#383737", activeforeground = "white", command = lambda:clickOnOperation("**(1/2)"))
@@ -683,7 +713,7 @@ buttonSubst.grid(row = 0, column = 8, padx = 0, pady = 0, columnspan = 1, sticky
 
 
 
-# FIFTH ROW
+# Fifth row of buttons inside the calculatorFrame
 fifthRowButtons.columnconfigure((8,1,2,3,4,5,6,7), weight=1)  # when window is resized
 
 button1X = Button(fifthRowButtons, font = buttonsFont, text = "1/x", width = 2, height = 4, bg = "#20221f", fg = "white", relief = "raised",  activebackground = "#383737", activeforeground = "white", command = lambda:using1X())
@@ -714,7 +744,7 @@ buttonAdd = Button(fifthRowButtons, font = buttonsFont, text = "+", width = 2, h
 buttonAdd.grid(row = 0, column = 8, padx = 0, pady = 0, columnspan = 1, sticky = "EWNS")
 
 
-# SIXTH ROW
+# Sixth row of buttons inside the calculatorFrame
 sixthRowButtons.columnconfigure((8,1,2,3,4,5,6,7), weight=1)  # when window is resized
 
 buttonX = Button(sixthRowButtons, font = buttonsFont, text = "X", width = 2, height = 4, bg = "#20221f", fg = "white", relief = "raised",  activebackground = "#383737", activeforeground = "white")
@@ -745,44 +775,55 @@ buttonEqual = Button(sixthRowButtons, font = buttonsFont, text = "=", width = 2,
 buttonEqual.grid(row = 0, column = 8, padx = 0, pady = 0, columnspan = 1, sticky = "EWNS")
 
 
-# PLOTTING FRAME LABELS, ENTRIES, AND BUTTONS
 
+# PLOTTING STUFF SECTION ============================================================================================================================================================================================================
+
+# PLOT button on the plottingFrame
 buttonPLOT = Button(thirdRowFunctions2Plot, font = plotButtonFont, text = "PLOT", width = 5, height = 2, bg = "#20221f", fg = "white", relief = "raised",  activebackground = "#383737", activeforeground = "white", command = lambda:plotFunction())
 buttonPLOT.grid(row = 0, column = 0, padx = 0, pady = 0, columnspan = 1, sticky = "EWNS")
 
+# Xmin label and entry on the plottingFrame
 Xminlabel = Label(firstRowFunctions2Plot, font = buttonsFont, text = "X min:", width = 6, height = 2, bg = "#20221f", fg = "white", activeforeground = "white")
 Xminlabel.pack(side = LEFT, padx = 3)
 
 XminEntry = Entry(firstRowFunctions2Plot, width = 6, textvariable = xminsize)
 XminEntry.pack(side = LEFT, padx = 3)
 
+# Ymin label and entry on the plottingFrame
 Yminlabel = Label(firstRowFunctions2Plot, font = buttonsFont, text = "Y min:", width = 6, height = 2, bg = "#20221f", fg = "white", activeforeground = "white")
 Yminlabel.pack(side = LEFT, padx = 3)
 
 YminEntry = Entry(firstRowFunctions2Plot, width = 6, textvariable = yminsize)
 YminEntry.pack(side = LEFT, padx = 3)
 
+# Xmax label and entry on the plottingFrame
 Xmaxlabel = Label(secondRowFunctions2Plot, font = buttonsFont, text = "X max:", width = 6, height = 2, bg = "#20221f", fg = "white", activeforeground = "white")
 Xmaxlabel.pack(side = LEFT, padx = 3)
 
 XmaxEntry = Entry(secondRowFunctions2Plot, width = 6, textvariable = xmaxsize)
 XmaxEntry.pack(side = LEFT, padx = 3)
 
+# Ymax label and entry on the plottingFrame
 Ymaxlabel = Label(secondRowFunctions2Plot, font = buttonsFont, text = "Y max:", width = 6, height = 2, bg = "#20221f", fg = "white", activeforeground = "white")
 Ymaxlabel.pack(side = LEFT, padx = 3)
 
 YmaxEntry = Entry(secondRowFunctions2Plot, width = 6, textvariable = ymaxsize)
 YmaxEntry.pack(side = LEFT, padx = 3)
 
+# Function label and entry on the plottingFrame
 Functionlabel = Label(firstRowFunctions2Plot, font = buttonsFont, text = "Function:", width = 8, height = 2, bg = "#20221f", fg = "white", activeforeground = "white")
 Functionlabel.pack(side = LEFT, padx = 3)
 
 FunctionEntry = Entry(firstRowFunctions2Plot, textvariable = function)
 FunctionEntry.pack(side = LEFT, padx = 3)
 
+# Spinbox to select graph's color on the plottingFrame
 spinbox = Spinbox(firstRowFunctions2Plot, values=a_list, textvariable=colorSelected)
 spinbox.config(state = "readonly", background = "#20221f", foreground = "#20221f")
 spinbox.pack(side = LEFT, padx = 3)
 
+
+
 #                     Main Loop 
 mainWindow.mainloop()
+
