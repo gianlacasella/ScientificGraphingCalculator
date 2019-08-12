@@ -1,12 +1,8 @@
 #                  Modules 
 from tkinter import Tk, Spinbox, PhotoImage, Entry, Frame, LEFT, RIGHT, BOTTOM, BOTH, TOP, Label, StringVar, font, Button, Text, DISABLED, NORMAL, INSERT, END, Scrollbar, Y
-
 import scipy.misc
-from numpy import *
-
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
-
 import matplotlib.pyplot as plt
 
 #               Main  Window
@@ -30,7 +26,7 @@ historyTextFont = font.Font(family = "Verdana", size = 14, weight = "bold")
 plotButtonFont = font.Font(family= "Verdana", size = 16, weight = "bold")
 
 
-# Booleans and StringVar
+# Booleans, StringVar and lists
 operationFilling = False
 parenthesisOpen = False
 actualHistoryOperation = StringVar()
@@ -49,6 +45,9 @@ ATANButtonText = StringVar()
 SINButtonText = StringVar()
 COSButtonText = StringVar()
 TANButtonText = StringVar()
+firstScreenText = StringVar()
+secondScreenText = StringVar()
+
 
 #                     Frames 
 
@@ -164,7 +163,7 @@ history.config(yscrollcommand=textScrollbar.set)
 textScrollbar.config(command=history.yview)
 history.pack()
 
-#                   Plotting with matplotlib
+#                   Plotting an empty graph with matplotlib, into the tkinter window
 
 firstPlot = False
 myFigure = Figure(figsize=(5,5), dpi = 100)
@@ -176,14 +175,10 @@ canvas.get_tk_widget().pack(side = BOTTOM, fill = BOTH, expand = True)
 toolbar = NavigationToolbar2Tk(canvas, plottingFrame)
 canvas._tkcanvas.pack(side = TOP, fill = BOTH, expand = True)
 
+
 #                    Screens
 # We use 2 screens, firstScreen and secondScreen, both  as labels
 
-
-firstScreenText = StringVar()
-firstScreenText.set("0")
-secondScreenText = StringVar()
-secondScreenText.set("0")
 
 firstScreen = Label(screensFrame, textvariable = firstScreenText, font = mainWindowFont, anchor = "e")
 firstScreen.grid(row = 1, column = 0, padx = 0, pady = 2)
@@ -193,29 +188,19 @@ secondScreen = Label(screensFrame, textvariable = secondScreenText, font = secon
 secondScreen.grid(row = 0, column = 0, padx = 0, pady = 2)
 secondScreen.config(background = "#20221f", fg = "white", justify = "right",height = "5", width = "62")
 
-
-#                     Functions 
-
-
+# First execution settings
+firstScreenText.set("0")
+secondScreenText.set("0")
 DEGButtonText.set("DEG")
-
-
 ASINButtonText.set("asin()")
-
-
 ACOSButtonText.set("acos()")
-
-
 ATANButtonText.set("atan()")
-
-
 SINButtonText.set("sin()")
-
-
 COSButtonText.set("cos()")
-
-
 TANButtonText.set("tan()")
+
+
+#                          Usefull functions
 
 def firstScreenTextSet(num):
     # We need global variables
@@ -230,7 +215,6 @@ def firstScreenTextSet(num):
     if operationMade == True:
         firstScreenText.set("")
         operationMade = False
-
     # We get  whats on the second screen
     textSecondScreen = secondScreenText.get()
     if textSecondScreen[-1] == True and operationFilling == True:
@@ -247,6 +231,7 @@ def firstScreenTextSet(num):
         operationFilling = False
     return
 
+
 # Function to use on C button
 def C():
     firstScreenText.set("0")
@@ -260,6 +245,7 @@ def Delete():
     actualNumber = actualNumber[:-1]
     firstScreenText.set(actualNumber)
     return
+
 
 
 # Function to use when the user clicks on a operation sign
@@ -285,6 +271,8 @@ def clickOnOperation(operation):
     secondScreenText.set(textSecondScreen)
     return
 
+
+
 # Button to change the DEG button text to RAD
 def changeDEGtext():
     if DEGButtonText.get() == "DEG":
@@ -292,6 +280,7 @@ def changeDEGtext():
     else:
         DEGButtonText.set("DEG")
     return
+
 
 
 # Function to change the trigonometric functions button text 
@@ -312,10 +301,14 @@ def changeTrigonometricFunctionsText():
         TANButtonText.set("tan()")
     return
 
+
+
 # Function to use on the CE button
 def CE():
     firstScreenText.set("0")
     return
+
+
 
 
 def calculate():
@@ -323,6 +316,7 @@ def calculate():
     global actualHistoryOperation
     if secondScreenText.get() == "0":
         secondScreenText.set("")
+
 
 
     # We get the complete operation
@@ -339,12 +333,14 @@ def calculate():
     return
 
 
+
 def addHistory():
     global actualHistoryOperation
     history.config(state = NORMAL)
     history.insert(INSERT, "\n\n" + actualHistoryOperation.get())
     history.config(state = DISABLED)
     return
+
 
 
 def clearHistory():
@@ -356,31 +352,26 @@ def clearHistory():
     return
 
 
+
 def calculateTrigonometric(function):
     global operationMade
     global actualHistoryOperation
     if secondScreenText.get() == "0":
         secondScreenText.set("")
-
-
     # We get the complete operation value for the trigonometric function
     completeText = secondScreenText.get() + firstScreenText.get()
     completeTextWithDot = completeText.replace(",", ".")
     secondScreenText.set(completeText)
-
     # We get the  actual value  to  evaluate  in the trigonometric function
     value = eval(completeTextWithDot)
-
     # We need to  know  if the   value   is  in rads or degrees
     typevalue = DEGButtonText.get()
-
     # Now we call solveTrigonometric
     if typevalue == "RAD":
         fulloperation = function + "(" + str(value) + ")"
     else:
         fulloperation = function + "(deg2rad(" + str(value) + "))" 
     solution = eval(fulloperation)
-
     solutionTextWithoutDot = str(solution).replace(".", ",")
     firstScreenText.set(solutionTextWithoutDot)
     secondScreenText.set("0")
@@ -388,6 +379,7 @@ def calculateTrigonometric(function):
     actualHistoryOperation.set(function + "(" + str(value) + ")" + " = "+ solutionTextWithoutDot + "\n\n")
     addHistory()
     return
+
 
 
 def _sin():
@@ -399,6 +391,7 @@ def _sin():
         return
 
 
+
 def _cos():
     if COSButtonText.get() == "cos()":
         calculateTrigonometric("cos")
@@ -406,6 +399,7 @@ def _cos():
     else:
         calculateTrigonometric("cosh")
         return
+
 
 
 def _tan():
@@ -417,6 +411,7 @@ def _tan():
         return
 
 
+
 def asin():
     if ASINButtonText.get() == "asin()":
         calculateTrigonometric("arcsin")
@@ -424,6 +419,7 @@ def asin():
     else:
         calculateTrigonometric("arcsinh")
         return
+
 
 
 def acos():
@@ -435,6 +431,7 @@ def acos():
         return
 
 
+
 def atan():
     if ATANButtonText.get() == "atan()":
         calculateTrigonometric("arctan")
@@ -444,24 +441,20 @@ def atan():
         return
 
 
+
 def calculateLogarithmExponential(function):
     global operationMade
     global actualHistoryOperation
     if secondScreenText.get() == "0":
         secondScreenText.set("")
-
     # We get the complete operation value for the logarithm function
     completeText = secondScreenText.get() + firstScreenText.get()
     completeTextWithDot = completeText.replace(",", ".")
     secondScreenText.set(completeText)
-
     # We get the  actual value  to  evaluate  in the trigonometric function
     value = eval(completeTextWithDot)
-
     fulloperation = function + "(" + str(value) + ")"
-    
     solution = eval(fulloperation)
-
     solutionTextWithoutDot = str(solution).replace(".", ",")
     firstScreenText.set(solutionTextWithoutDot)
     secondScreenText.set("0")
@@ -471,9 +464,12 @@ def calculateLogarithmExponential(function):
     return
 
 
+
 def insertPI():
     firstScreenText.set("3,141592")
     return
+
+
 
 def usingDMS():
     firstScreen = firstScreenText.get()
@@ -493,6 +489,7 @@ def usingDMS():
     return
     
 
+
 def usingDEG():
     firstScreen = firstScreenText.get()
     secondScreen = secondScreenText.get()
@@ -507,6 +504,8 @@ def usingDEG():
     actualHistoryOperation.set("deg(" + str(value) + ") = " + str(result))
     addHistory()
     return
+
+
 
 def usingFactorial():
     firstScreen = firstScreenText.get()
@@ -523,10 +522,14 @@ def usingFactorial():
     addHistory()
     return
 
+
+
 def using1X():
     firstScreen = firstScreenText.get()
     firstScreenText.set(firstScreen + "1/")
     return
+
+
 
 def usingPlusMinus():
     firstScreen = firstScreenText.get()
@@ -535,6 +538,8 @@ def usingPlusMinus():
     else:
         firstScreenText.set("-" + firstScreen)
     return
+
+
 
 def plotFunction():
     global a
@@ -557,6 +562,8 @@ def plotFunction():
     toolbar = NavigationToolbar2Tk(canvas, plottingFrame)
     canvas._tkcanvas.pack(side = TOP, fill = BOTH, expand = True)
     return
+
+
 
 #                     Buttons 
 # Clean history button
