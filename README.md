@@ -12,9 +12,9 @@ The plotting frame was made with matplotlib module.
 
 # How should you run this script
 
-Just clone this repo, open a Terminal inside the folder (on linux) and type:
+Just clone this repo, open a Terminal inside the folder (on linux) and type one of this options:
 	
-	make run : run the script
+	make run: run the script
 	make clean: clean up Python's cache
 	make all: run and clean
 
