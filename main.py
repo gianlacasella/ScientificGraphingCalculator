@@ -4,7 +4,7 @@ import scipy.misc
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 import matplotlib.pyplot as plt
-from numpy import array, arange
+from numpy import *
 
 
 # Creating the  main window, and setting props
