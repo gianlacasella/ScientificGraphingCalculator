@@ -2,7 +2,7 @@
 from tkinter import Tk, Spinbox, PhotoImage, Entry, Frame, LEFT, RIGHT, BOTTOM, BOTH, TOP, Label, StringVar, font, Button, Text, DISABLED, NORMAL, INSERT, END, Scrollbar, Y
 import scipy.misc
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 import matplotlib.pyplot as plt
 from numpy import *
 
@@ -177,7 +177,7 @@ a.plot([],[])
 canvas = FigureCanvasTkAgg(myFigure, plottingFrame)
 canvas.draw()
 canvas.get_tk_widget().pack(side = BOTTOM, fill = BOTH, expand = True)
-toolbar = NavigationToolbar2Tk(canvas, plottingFrame)
+toolbar = NavigationToolbar2TkAgg(canvas, plottingFrame)
 canvas._tkcanvas.pack(side = TOP, fill = BOTH, expand = True)
 
 
