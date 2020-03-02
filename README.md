@@ -1,27 +1,38 @@
-# SCIENTIFIC PLOTTING CALCULATOR
+# Scientific Graphing Calculator
 
-A Python script that I wrote to learn (self-taught) to use Tkinter module. The program is a scientific/plotting calculator.
-The plotting frame was made with matplotlib module.
+A Python program that I wrote to learn (self-taught) to use Tkinter. The program is a scientific/plotting calculator, powered by
+Tkinter, matplotlib and numpy.
 
-# What I learned
+## Getting started
 
-* Managing windows with Tkinter: mainloop, PhotoImage and other properties
-* Managing Tkinter tools such as Frames, Buttons, Fonts, Entries, Labels, Spinboxes, ScrollBars, StringVars and their properties
+There are two ways to execute this program:
+
+1. You can clone/download this repository and open a command prompt / bash inside the downloaded folder. Then, just type in:
+'''
+	python main.py
+'''
+
+2. You can download my last release on this repository, and run scientificCalculator.exe on Windows
+
+## Prerequisites
+
+If you want to execute the program in the first way, you will need to have installed before:
+* Python 3.6
+* Matplotlib
+* Numpy
+* Tkinter
+
+## What I learned
+
+* Managing windows with Tkinter
+* Managing Tkinter tools
 * Learned some Python's functions such as exec(), eval() and lambda functions
 * Learned to add Matplotlib's Figures, Plots and Toolbars into a Tkinter Frame
 
-# How should you run this script
+## Authors
 
-Just clone this repo, open a Terminal inside the folder (on linux) and type one of this options:
-	
-	make run: run the script
-	make clean: clean up Python's cache
-	make all: run and clean
+* **Gianfranco Lacasella** - *Initial work* - [glacasellaUANDES](https://github.com/glacasellaUANDES)
 
-Remember to install before:
+## License
 
-	Python 3.6
-	Numpy
-	Tkinter
-	Scipy
-	Matplotlib
+This project is licensed under the GNU GENERAL PUBLIC LICENSE- see the [LICENSE.md](LICENSE.md) file for details
