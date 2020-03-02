@@ -5,16 +5,16 @@ Tkinter, matplotlib and numpy.
 
 ## Getting started
 
-There are two ways to execute this program:
+Be sure to check the Prerequisites section before you continue. There are two ways to execute this program:
 
-1. You can clone/download this repository and open a command prompt / bash inside the downloaded folder. Be sure to check the Prerequisites section before you continue.
+1. **You can clone/download this repository** and open a command prompt / bash inside the downloaded folder. 
 
-Then, just type in the cmd:
+Then, just type in:
 ```
 	python main.py
 ```
 
-2. You can download my last release on this repository, and run scientificCalculator.exe on Windows
+2. **You can download my last release on this repository**, and run scientificCalculator.exe on Windows
 
 ![Screenshot](/img/7.JPG)
 
