@@ -17,7 +17,7 @@ There are two ways to execute this program:
 ![Screenshot](/img/7.JPG)
 
 As you can see in the previous picture, the window has a left frame that works as scientific calculator, a center frame to show
-the operations made, and the right frame is a plotter. On this frame, you have to intoduce X and Y min and max, which are the plot axis limits. Then, you can choose a function to plot and a color. 
+the operations made, and the right frame is a plotter. On this frame, you have to introduce X and Y min and max, which are the plot axis limits. Then, you can choose a function to plot and a color. 
 
 It is necessary to introduce the function in the same way as you would introduce it on the Python interpreter.
 Example:
