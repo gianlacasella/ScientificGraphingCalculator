@@ -14,7 +14,7 @@ There are two ways to execute this program:
 
 2. You can download my last release on this repository, and run scientificCalculator.exe on Windows
 
-![Screenshot](/img/7.jpg)
+![Screenshot](/img/7.JPG)
 
 ## Prerequisites
 
