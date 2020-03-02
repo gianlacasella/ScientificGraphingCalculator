@@ -16,6 +16,24 @@ There are two ways to execute this program:
 
 ![Screenshot](/img/7.JPG)
 
+As you can see in the previous picture, the window has a left frame that works as scientific calculator, a center frame to show
+the operations made, and the right frame is a plotter. On this frame, you have to intoduce X and Y min and max, which are the plot axis limits. Then, you can choose a function to plot and a color. 
+
+It is necessary to introduce the function in the same way as you would introduce it on the Python interpreter.
+Example:
+
+* If you want to plot x squared function, you will have to write it as:
+```
+	x**2
+```
+
+* If you want to plot the absolute value of x cubed, you will have to write it as:
+```
+	abs(x**3)
+```
+
+On the bottom, you have also the matplotlib's Navigation Toolbar, which will allow you to navigate the plotted function (zoom in and out, move the graph and return to original state) and to save the picture on .png format.
+
 ## Prerequisites
 
 If you want to execute the program in the first way, you will need to have installed before:
