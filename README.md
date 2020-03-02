@@ -34,6 +34,8 @@ Example:
 
 On the bottom, you have also the matplotlib's Navigation Toolbar, which will allow you to navigate the plotted function (zoom in and out, move the graph and return to original state) and to save the picture on .png format.
 
+![Screenshot](/img/4.JPG)
+
 ## Prerequisites
 
 If you want to execute the program in the first way, you will need to have installed before:
