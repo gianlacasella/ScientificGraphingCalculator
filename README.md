@@ -5,7 +5,7 @@ Tkinter, matplotlib and numpy.
 
 ## Getting started
 
-Be sure to check the Prerequisites section before you continue. There are two ways to execute this program:
+**Be sure to check the Prerequisites section before you continue**. There are two ways to execute this program:
 
 1. **You can clone/download this repository** and open a command prompt / bash inside the downloaded folder. 
 
