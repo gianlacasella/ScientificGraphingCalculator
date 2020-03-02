@@ -8,9 +8,9 @@ Tkinter, matplotlib and numpy.
 There are two ways to execute this program:
 
 1. You can clone/download this repository and open a command prompt / bash inside the downloaded folder. Then, just type in:
-'''
+```
 	python main.py
-'''
+```
 
 2. You can download my last release on this repository, and run scientificCalculator.exe on Windows
 
