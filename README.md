@@ -7,7 +7,9 @@ Tkinter, matplotlib and numpy.
 
 There are two ways to execute this program:
 
-1. You can clone/download this repository and open a command prompt / bash inside the downloaded folder. Then, just type in:
+1. You can clone/download this repository and open a command prompt / bash inside the downloaded folder. Be sure to check the Prerequisites section before you continue.
+
+Then, just type in the cmd:
 ```
 	python main.py
 ```
