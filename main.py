@@ -39,16 +39,12 @@ class App:
         
     # Function to add elements to the firstScreenText
     def firstScreenTextSet(self, num):
-        # We need global variables
-        global operationFilling
-        global parenthesisOpen
-        global operationMade
-        # Analizing if thera are parenthesis
+        # Analizing if there are parenthesis
         if num == "(":
             self.parenthesisOpen = True
         elif  num == ")":
             self.parenthesisOpen = False
-        if operationMade == True:
+        if self.operationMade == True:
             self.firstScreenText.set("")
             self.operationMade = False
         # We get  whats on the second screen

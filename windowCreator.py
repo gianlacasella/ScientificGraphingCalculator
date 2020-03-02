@@ -1,4 +1,4 @@
-from tkinter import Tk, PhotoImage, RIGHT, BOTTOM, BOTH, TOP, StringVar, font, Text, DISABLED, Scrollbar, Y
+from tkinter import Tk, RIGHT, BOTTOM, BOTH, TOP, StringVar, font, Text, DISABLED, Scrollbar, Y
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 import frameCreator
@@ -8,8 +8,6 @@ def CreateWindow(window):
         window.mainWindow = Tk()
         window.mainWindow.title("Scientific Plotting Calculator v1.0")
         window.mainWindow.resizable(False, False)
-        window.img = PhotoImage(file = "calc.png")
-        window.mainWindow.call('wm', 'iconphoto', window.mainWindow._w, window.img)
         
         # Fonts
         window.mainWindowFont = font.Font(family = "Verdana", size = 10)
